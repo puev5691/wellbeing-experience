@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$title": "Experience Corpus Intake Record",
+  "type": "object",
+  "required": ["intake_id", "source_corpus", "entity_role", "source_locator", "history_completeness", "status"],
+  "properties": {
+    "intake_id": {"type": "string"},
+    "source_corpus": {"enum": ["pensioners", "hospital", "live_delta", "other"]},
+    "entity_role": {"type": "string"},
+    "source_locator": {"type": "string"},
+    "immutable_identity": {"type": ["string", "null"]},
+    "content_sha256": {"type": ["string", "null"]},
+    "history_completeness": {"enum": ["full_claim_verified", "partial", "unknown"]},
+    "known_topics": {"type": "array", "items": {"type": "string"}},
+    "failure_or_retirement_reason": {"type": ["string", "null"]},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}},
+    "status": {"enum": ["registered", "extraction_pending", "extracted", "blocked", "superseded"]}
+  },
+  "additionalProperties": true
+}
