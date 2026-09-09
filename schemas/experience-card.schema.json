@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/wellbeing-experience/experience-card.schema.json",
+  "title": "Wellbeing Experience Card",
+  "type": "object",
+  "required": [
+    "experience_id",
+    "entity_role",
+    "task_or_episode",
+    "lesson",
+    "next_time_behavior",
+    "prohibited_repeat",
+    "applicability_boundary",
+    "freshness",
+    "confidence",
+    "status"
+  ],
+  "properties": {
+    "experience_id": {"type": "string", "minLength": 1},
+    "entity_role": {"type": "string", "minLength": 1},
+    "source_corpus": {"enum": ["pensioners", "hospital", "live_delta", "other"]},
+    "source_instance_ref": {"type": ["string", "null"]},
+    "task_or_episode": {"type": "string"},
+    "context_refs": {"type": "array", "items": {"type": "string"}},
+    "trigger_or_symptom": {"type": ["string", "null"]},
+    "initial_hypothesis": {"type": ["string", "null"]},
+    "actions_or_attempts": {"type": "array", "items": {"type": "string"}},
+    "failed_attempts": {"type": "array", "items": {"type": "string"}},
+    "observed_result": {"type": ["string", "null"]},
+    "working_resolution": {"type": ["string", "null"]},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}},
+    "lesson": {"type": "string"},
+    "next_time_behavior": {"type": "string"},
+    "prohibited_repeat": {"type": "string"},
+    "applicability_boundary": {"type": "string"},
+    "freshness": {"enum": ["reusable", "historical", "requires-current-check", "unknown"]},
+    "confidence": {"enum": ["high", "medium", "low"]},
+    "behavior_test_id": {"type": ["string", "null"]},
+    "supersedes": {"type": "array", "items": {"type": "string"}},
+    "status": {"enum": ["candidate", "reusable", "superseded", "conflicted", "unknown"]}
+  },
+  "additionalProperties": true
+}
