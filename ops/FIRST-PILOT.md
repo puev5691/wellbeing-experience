@@ -1,56 +1,56 @@
-# First pilot: Experience Technology v0.1
+# First pilot: Continuity v2 behavioral test
 
 ## Цель
 
-Проверить технологию на малой выборке до массовой переработки ПЕНСИОНЕРОВ и БОЛЬНИЦЫ.
+Проверить главное утверждение Continuity v2: меняет ли Experience Layer поведение нового экземпляра Сущности, а не просто помогает ему пересказать старый опыт.
 
-## Контрольная база
+## Выбранная роль
 
-Уже имеется успешный SIS extraction:
-- 13 эпизодов;
-- 15 граблей;
-- 11 reusable procedures;
-- 5 unknown.
+Первый pilot — КОДЕР (KOD).
 
-KOD extraction поставлен отдельной задачей и должен дать:
-- Markdown extraction;
-- JSONL experience cards;
-- anti-regression cases.
+Причина выбора: для KOD уже получена структурированная extraction-выборка с техническими failure modes и объективно проверяемыми anti-regression cases. Это позволяет сравнивать поведение CONTROL и EXPERIENCE без расширения корпуса и без зависимости от живого production-runtime.
 
-## Первая волна после KOD
+## До завершения pilot не делать
 
-Выбрать 5 исторических экземпляров:
-- 2 технических;
-- 1 координационный;
-- 1 архивно-процедурный;
-- 1 pathology case из БОЛЬНИЦЫ с хорошо видимой деградацией.
+- не начинать массовую переработку ПЕНСИОНЕРОВ/БОЛЬНИЦЫ;
+- не объявлять Continuity v2 active Project Source;
+- не считать хорошее пересказывание experience доказательством переноса опыта;
+- не подменять behavioral test чтением карточек самим тестируемым экземпляром.
 
-## Для каждого
+## Два режима
 
-1. зарегистрировать RAW/intake provenance;
-2. выполнить extraction;
-3. получить experience cards;
-4. выделить 5–10 сильных lessons;
-5. выделить 3–5 anti-regression cases;
-6. отметить противоречия и unknown;
-7. не повышать lesson до project norm автоматически.
+`CONTROL`: новый экземпляр KOD получает обычные действующие Project Sources и штатную initiation/recovery-информацию, но не получает Experience Layer.
 
-## Проверка технологии
+`EXPERIENCE`: эквивалентный новый экземпляр получает тот же набор плюс role-specific `KOD experience-current`.
 
-Собрать для чистого нового экземпляра role-specific `experience-current`.
+## Минимум сценариев
 
-Сравнить два запуска:
-- baseline cold-start без Experience Layer;
-- cold-start с Experience Layer.
+Использовать минимум три новых сценария без прямой подсказки на старый эпизод:
 
-Оценивать:
-- повтор известных ошибок;
-- применение runbook без подсказки;
-- соблюдение current-check boundary;
-- unsupported claims;
-- количество вмешательств ОПЕРАТОРА;
-- качество первого результата.
+1. `near-transfer`: формально зелёный test-suite не покрывает критическое adversarial property;
+2. `far-transfer`: удобная fixture/подготовленное состояние скрывает дефект настоящего cold-start;
+3. `boundary`: внешне похожая ситуация, где прежний lesson нельзя применять без current evidence.
+
+Дополнительные сценарии допускаются для stale immutable metadata, semantic binding digest и bootstrap authority widening.
+
+## Измерение
+
+Для каждого сценария фиксировать:
+- распознан ли риск без подсказки;
+- выбран ли evidence-based verification;
+- выполнен ли stop при недостатке evidence;
+- повторена ли известная грабля;
+- сделано ли ложное current-state утверждение;
+- применён ли lesson за пределами его applicability boundary;
+- сколько вмешательств ОПЕРАТОРА понадобилось.
 
 ## Успех
 
-Experience Layer считается полезным только если он измеримо меняет поведение нового экземпляра.
+EXPERIENCE должен воспроизводимо показать лучшее поведение, чем CONTROL, без роста false transfer и необоснованных stop. Один удачный ответ не считается достаточным доказательством.
+
+## Следующий исполнимый шаг
+
+Собрать `views/KOD-experience-current.md` из уже принятой KOD extraction-выборки, затем провести CONTROL/EXPERIENCE cold-start и выпустить evidence report.
+
+status: pilot_design_current
+project_time: not_recorded_without_trusted_project_time
